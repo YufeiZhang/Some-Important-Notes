@@ -1,28 +1,29 @@
-def dfs_rec(graph, start, path, n, deep):
-    path = list(path) + [start]
-    print(start, n)
+def dfs_rec(graph, start, deep):
+    print()
+    #print(start, deep)
 
-    if start not in deep:
-    	deep[start] = n
-    
     if start not in graph.keys():
     	pass
-
+    
     else:
     	for node in graph[start]:
-    		#print("node",node, "start = ", start)
-    		if node not in path:
-    			path = dfs_rec(graph, node, path, n+1, deep)
+    		if node not in deep:
+    			deep[node] = [[start], deep[start][0] + deep[start][1]]
+
     		else:
-    			#print("start -> end = ", start, node)
-    			if node in graph[start]:
-    				if deep[start] >= deep[node]:
-    					deep[node] = deep[start] + 1
-    					path = dfs_rec(graph, node, path, n+1, deep)
+    			for ch in deep[node][0]:
+    				if ch in deep[start][1]:
+    					deep[node][0].remove(ch)
+
+    			if start not in deep[node][1]:
+    				deep[node][0].append(start)
+    				deep[node][1] = deep[node][1] + deep[start][0] 
+    			
+    		print(node, deep[node])
+    		deep = dfs_rec(graph, node, deep)
+
     return deep
     
-
-
 
 def main():
 	try:
@@ -59,8 +60,10 @@ def main():
 		# check which to print
 		
 		for i in range(len(starts)):
-			deep = dfs_rec(graph, starts[i], [], 0, {})
+			deep[starts[i]] = [[],[]]
+			deep = dfs_rec(graph, starts[i], deep)
 			print(deep)
+			'''
 			for k in range(len(pairs)-1,-1,-1):
 				try:
 					#print(deep[pairs[k][1]])
@@ -73,8 +76,7 @@ def main():
 						pairs.pop(k)
 				except:
 					pass
-		
-					
+			'''
 		#print(pairs)
 
 
