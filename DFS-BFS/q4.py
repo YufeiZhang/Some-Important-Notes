@@ -1,7 +1,4 @@
 def dfs_rec(graph, start, deep):
-    print()
-    #print(start, deep)
-
     if start not in graph.keys():
     	pass
     
@@ -17,9 +14,8 @@ def dfs_rec(graph, start, deep):
 
     			if start not in deep[node][1]:
     				deep[node][0].append(start)
-    				deep[node][1] = deep[node][1] + deep[start][0] 
+    				deep[node][1] = deep[node][1] + deep[start][0] + deep[start][1]
     			
-    		print(node, deep[node])
     		deep = dfs_rec(graph, node, deep)
 
     return deep
@@ -33,9 +29,8 @@ def main():
 		a = datetime.datetime.now()
 		#filename = str(input("Which data file do you want to use? "))
 		txt = open(filename)
+	
 
-		# read the input file and store the graph into a dictionary
-		# also, store all pair of R(a,b) into a list called pairs
 		graph = {}; pairs = []; starts, ends = [], []
 		deep = {}
 		for line in txt:			
@@ -58,30 +53,20 @@ def main():
 					graph[pair[0]].append(pair[1])
 
 		# check which to print
-		
 		for i in range(len(starts)):
 			deep[starts[i]] = [[],[]]
 			deep = dfs_rec(graph, starts[i], deep)
-			print(deep)
-			'''
+			
+			#print(deep)
 			for k in range(len(pairs)-1,-1,-1):
 				try:
-					#print(deep[pairs[k][1]])
-					current = []
-					for vertex in graph[pairs[k][0]]:
-						current.append( deep[vertex] - deep[pairs[k][0]] )
-
-					current_min = min(current)
-					if abs(deep[pairs[k][1]] - deep[pairs[k][0]]) > current_min:
+					if pairs[k][0] in deep[pairs[k][1]][1]:
 						pairs.pop(k)
 				except:
 					pass
-			'''
-		#print(pairs)
 
 
 		# print out the non redundant paths stored in pairs
-		print()
 		print("The nonredundant facts are:")
 		for p in pairs: print("R({:s},{:s})".format(p[0], p[1]))
 
