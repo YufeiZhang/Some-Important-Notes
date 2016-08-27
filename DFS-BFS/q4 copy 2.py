@@ -10,11 +10,11 @@ def dfs_rec(graph, start, path, n, deep):
 
     else:
     	for node in graph[start]:
-    		#print("node",node, "start = ", start)
+    		print("node",node, "start = ", start)
     		if node not in path:
     			path = dfs_rec(graph, node, path, n+1, deep)
     		else:
-    			#print("start -> end = ", start, node)
+    			print("start -> end = ", start, node)
     			if node in graph[start]:
     				if deep[start] >= deep[node]:
     					deep[node] = deep[start] + 1
