@@ -1,0 +1,60 @@
+import cv2
+import numpy as np
+from matplotlib import pyplot as plt
+
+img = cv2.imread('1.jpg')
+imgC = cv2.imread('1.jpg')
+imgR = cv2.imread('1.jpg',0)
+imgG = cv2.imread('1.jpg',0)
+imgB = cv2.imread('1.jpg',0)
+
+imageshape = img.shape
+hight = 0
+weight = 0
+hight = imageshape[0]
+weight = imageshape[1]
+
+
+for i in range (hight):
+	for j in range (weight):
+		imgR[i,j] = imgC[i,j][0]
+		imgG[i,j] = imgC[i,j][1]
+		imgB[i,j] = imgC[i,j][2]
+
+# Otsu's thresholding after Gaussian filtering FOR RED CLASS
+blurR = cv2.GaussianBlur(imgR,(5,5),0)
+retR,thR = cv2.threshold(blurR,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+# Otsu's thresholding after Gaussian filtering FOR GREEN CLASS
+blurG = cv2.GaussianBlur(imgG,(5,5),0)
+retG,thG = cv2.threshold(blurG,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+# Otsu's thresholding after Gaussian filtering FOR BLUE CLASS
+blurB = cv2.GaussianBlur(imgB,(5,5),0)
+retB,thB = cv2.threshold(blurB,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+
+for i in range (hight):
+	for j in range (weight):
+		imgC[i,j]=[thR[i,j],thG[i,j],thB[i,j]]
+#########################################################
+Z = img.reshape((-1,3))
+
+# convert to np.float32
+Z = np.float32(Z)
+
+# define criteria, number of clusters(K) and apply kmeans()
+criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
+K = 3
+ret,label,center=cv2.kmeans(Z,K,criteria,10,0)
+
+# Now convert back into uint8, and make original image
+center = np.uint8(center)
+res = center[label.flatten()]
+res2 = res.reshape((img.shape))
+#######################################################
+
+# plot all the images and their histograms
+plt.subplot(121),plt.imshow(imgC),plt.title('Part1')
+plt.xticks([]), plt.yticks([])
+plt.subplot(122),plt.imshow(res2),plt.title('Part2')
+plt.xticks([]), plt.yticks([])
+plt.show()
+plt.show()
