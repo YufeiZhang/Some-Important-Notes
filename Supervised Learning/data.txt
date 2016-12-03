@@ -1,0 +1,21 @@
+yufei2@ud25:~/p2>python3 SuperLearn.py 
+Tile indices for input ( 0.1 , 0.1 ) are :  [0, 121, 242, 363, 484, 605, 726, 859]
+Tile indices for input ( 4.0 , 2.0 ) are :  [39, 160, 281, 403, 524, 645, 777, 898]
+Tile indices for input ( 5.99 , 5.99 ) are :  [108, 241, 362, 483, 604, 725, 846, 967]
+Tile indices for input ( 4.0 , 2.1 ) are :  [39, 160, 281, 403, 535, 656, 777, 898]
+Example ( 0.1 , 0.1 , 2.0 ):     f before learning:  0.0     f after learning :  0.1914653659980762
+Example ( 4.0 , 2.0 , -1.0 ):     f before learning:  0.0     f after learning :  -0.0957326829990381
+Example ( 5.99 , 5.99 , 3.0 ):     f before learning:  0.0     f after learning :  0.2871980489971143
+Example ( 4.0 , 2.1 , -1.0 ):     f before learning:  -0.07210802296867311     f after learning :  -0.16093761146316388
+The estimated MSE:  0.252751596629
+The estimated MSE:  0.0689670007584
+The estimated MSE:  0.0251791254506
+The estimated MSE:  0.0152793886151
+The estimated MSE:  0.0123254280905
+The estimated MSE:  0.0119314248616
+The estimated MSE:  0.0115319946975
+The estimated MSE:  0.0116074273998
+The estimated MSE:  0.0111939145072
+The estimated MSE:  0.0112239870615
+The estimated MSE:  0.0111107895115
+
